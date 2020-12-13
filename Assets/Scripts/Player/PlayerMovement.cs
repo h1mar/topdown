@@ -4,32 +4,35 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float MOVE_SPEED = 5f;
+  public float MOVE_SPEED = 5f;
+  public Animator animator;
 
-    public Rigidbody2D rb;
-    public Camera cam;
+  public Rigidbody2D rb;
+  public Camera cam;
 
-    Vector2 movement;
-    Vector2 mousePos;
+  Vector2 movement;
+  Vector2 mousePos;
 
-    // Update is called once per frame
-    void Update() {
-        
-        //WASD and arrow keys
-        movement.x = Input.GetAxisRaw("Horizontal");
-        movement.y = Input.GetAxisRaw("Vertical");
+  // Update is called once per frame
+  void Update()
+  {
 
-        //Translate mouse position pixel coordinates to in game world coordinates
-        mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
+    //WASD and arrow keys
+    movement.x = Input.GetAxisRaw("Horizontal");
+    movement.y = Input.GetAxisRaw("Vertical");
 
-    }
+    //Translate mouse position pixel coordinates to in game world coordinates
+    mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
 
-    void FixedUpdate() {
+  }
 
-        rb.MovePosition(rb.position + movement * MOVE_SPEED * Time.deltaTime);
+  void FixedUpdate()
+  {
 
-        Vector2 lookDir = mousePos - rb.position;
-        float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg;
-        rb.rotation = angle;
-    }
+    rb.MovePosition(rb.position + movement * MOVE_SPEED * Time.fixedDeltaTime);
+
+    Vector2 lookDir = mousePos - rb.position;
+    float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg;
+    rb.rotation = angle;
+  }
 }
